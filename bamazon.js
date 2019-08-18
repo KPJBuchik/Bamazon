@@ -49,21 +49,47 @@ function inventory() {
 function purchase() {
     inquirer
         .prompt([{
-            name: "iteminput",
+            name: "select",
             type: "input",
             message: "select the item you would ike to purchase by the item id",
+            validate: function (id) {
+                if (!isNaN(id) && id < 11) {
+                    return true;
+                }
+                return false;
+
+
+            }
 
         },
         {
             type: "input",
             name: "quantity",
             message: "How many would you like to purchase?",
+            validate: function (quant) {
+                if (!isNaN(quant)) {
+                    return true;
+                }
+                return false;
+            }
 
         }
+            //purchase function uhhhh
+            //select by item id
+            //update quantity 
         ]).then(function (response) {
-            var inputArray = connection.query("SELECT * FROM products WHERE item_id=?", response.input, function (err, data) {
-                if (response.input > data.quantity) {
-                    console.log("sorry we are sold out")
+            connection.query("SELECT * FROM products WHERE item_id=?", response.select, function (err, data) {
+                if (err) throw err;
+                var stock = data[0].stock_quantity
+                var price = data[0].price
+                var newStock = stock - response.quantity
+                if (response.quantity < stock) {
+                    connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newStock, response.select],
+                        function (err, res) {
+                            console.table(res);
+                        });
+
+                    console.log(newStock)
 
                 }
 
@@ -76,6 +102,8 @@ function purchase() {
 
         })
 }
+
+//update products 
 
 
 

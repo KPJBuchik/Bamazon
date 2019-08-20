@@ -101,11 +101,52 @@ function addInventory() {
 }
 //finish these
 function addProduct() {
+    inquirer
+    .prompt([{
+        name:"name",
+        type:"input",
+        message:"what item would you like to add?",
+    },
+    {
+        name:"department",
+    type:"input",
+    message:"what department?",
+},
+    {name:"price",
+    type:"input",
+    message:"what is the price of each unit?"
 
-    connection.query("INSERT products SET where ?")
+    },
+    {name:"stock",
+    type:"input",
+    message:"how many in stock"
+
+    }
+
+    ])
+
+.then(function(response){
+    connection.query("INSERT INTO products SET ?",{
+        product_name:response.name,
+        department_name:response.department,
+        price:response.price,
+        stock_quantity:response.price
+    }),
+    function (err){
+        if (err) throw err;
+    }
+    console.log("product list updated")
+    
+})
+
+  //  connection.query("INSERT INTO products SET ?",{
+    //    item_id:
+   // }
+
+   // INSERT INTO products (product_name, department_name, price, stock_quantity)
+    //VALUES ("xbox", "video games", 300, 10);
 
 }
-
 
 
 

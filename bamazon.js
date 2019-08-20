@@ -40,7 +40,7 @@ function start() {
 }
 
 function inventory() {
-    var query = connection.query("SELECT * FROM products", function (err, results) {
+     connection.query("SELECT * FROM products", function (err, results) {
         console.table(results)
         purchase()
     })
@@ -83,24 +83,52 @@ function purchase() {
                 var stock = data[0].stock_quantity
                 var price = data[0].price
                 var newStock = stock - response.quantity
+                var totalPrice= price *response.quantity
                 if (response.quantity < stock) {
                     connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newStock, response.select],
                         function (err, res) {
-                            console.table(res);
                         });
-
-                    console.log(newStock)
-
+                    console.log("Succesful purchase of " +response.quantity+ "units for "+totalPrice)
+                    restart();
+                    
                 }
 
                 else {
-                    console.log("purchase succesful")
+                    console.log("no dice")
+                    start()
                 }
 
 
             })
 
         })
+
+
+}
+
+
+function restart (){
+
+    inquirer
+        .prompt([{
+            name: "confirm",
+            type: "confirm",
+            message: "would you like to make another purchase?",
+            default: true
+        }]).then(function (answer) {
+        if (answer){
+            start()
+        }
+        else {
+            console.log(":..::..::..::..:")
+            console.log("Come Back Soon")
+            console.log(":..::..::..::..:")
+        }
+
+
+
+
+})
 }
 
 //update products 

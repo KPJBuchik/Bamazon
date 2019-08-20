@@ -94,7 +94,7 @@ function purchase() {
                 }
 
                 else {
-                    console.log("no dice")
+                    console.log("We are unable to place your order")
                     start()
                 }
 

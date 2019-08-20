@@ -84,7 +84,7 @@ function addInventory() {
             connection.query("SELECT * FROM products WHERE item_id=?", response.select, function (err, data) {
                 if (err) throw err;
                 var stock = data[0].stock_quantity
-                var newStock = parseInt(stock + response.quantity)
+                var newStock = (parseInt(stock + parseInt(response.quantity)))
 
                 connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newStock, response.select],
                 function (err, res) {

@@ -53,7 +53,7 @@ function purchase() {
             type: "input",
             message: "select the item you would like to purchase by the item id",
             validate: function (id) {
-                if (!isNaN(id)) {
+                if (!isNaN(id) && id < 11) {
                     return true;
                 }
                 return false;
@@ -96,7 +96,7 @@ function purchase() {
                 else {
                     console.log("no dice")
                     start()
-                };
+                }
 
 
             });

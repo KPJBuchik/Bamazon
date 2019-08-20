@@ -30,16 +30,16 @@ function start() {
         }])
         .then(function (response) {
             if (response.options === "View Products for Sale") {
-                viewProducts()
+                viewProducts();
             }
             if (response.options === "View Low Inventory") {
-                viewInventory()
+                viewInventory();
             }
             if (response.options === "Add to Inventory") {
-                addInventory()
+                addInventory();
             }
             if (response.options === "Add New Product") {
-
+                addProduct();
             }
 
         })
@@ -48,10 +48,10 @@ function start() {
 
 function viewProducts() {
     connection.query("SELECT * FROM products", function (err, results) {
-        console.table(results)
-        goBack()
-    })
-}
+        console.table(results);
+        goBack();
+    });
+};
 
 
 function viewInventory() {
@@ -66,7 +66,7 @@ function viewInventory() {
 
 }
 
-
+//finish these
 function addInventory() {
     inquirer
         .prompt([{
@@ -80,18 +80,31 @@ function addInventory() {
             message: "How much stock would you like to add to the inventory"
         }
         ])
+        .then(function (response) {
+            connection.query("SELECT * FROM products WHERE item_id=?", response.select, function (err, data) {
+                if (err) throw err;
+                var stock = data[0].stock_quantity
+                var newStock = parseInt(stock + response.quantity)
+
+                connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newStock, response.select],
+                function (err, res) {
+                });
+
+                goBack()
+
+            
+            })
+        })
 
 
 
 }
+//finish these
+function addProduct() {
 
-function addProduct(){
+    connection.query("INSERT products SET where ?")
 
-
-    
 }
-
-
 
 
 

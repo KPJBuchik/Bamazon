@@ -11,11 +11,11 @@ The inventory is updated accordingly and displays the user the total spent.
 # Manager View
 The manager shows a list of available products as well as a choice to view which products have a low inventory (less than 10 units).
 
-![bamazonManager](bamazonManager.png)
+![bamazonManager](bamazonmanager.png)
 
 If an item's inventory is low there is an option to add more stock to the item's inventory.  The user can also add a brand new item into the database. 
 
-![bamazonManage](bamazonManager2.png)
+![bamazonManage](bamazonmanager2.png)
 
 ## Technologies Used
 - MySql 
